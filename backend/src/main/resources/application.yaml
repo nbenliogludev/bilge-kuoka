@@ -1,0 +1,12 @@
+spring:
+    application:
+        name: gemini-ai-chatbot
+    profiles:
+        active: dev # This is optional, but you can specify which profile to use (dev, prod, etc.)
+
+server:
+    port: 8080
+
+gemini:
+    model: gemini-1.5-flash
+    api-key: AIzaSyATMVxZHehL5Wi0qqeio_TSj34UJxZBSnc
