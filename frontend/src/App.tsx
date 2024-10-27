@@ -1,17 +1,16 @@
 import "./App.css";
 import { ThemeProvider } from "./context/theme-provider";
-import Root from "./routes/root";
 
-// interface AppProps {
-//   children: React.ReactNode;
-// }
+interface AppProps {
+  children: React.ReactNode;
+}
 
-function App() {
+function App({children}: AppProps) {
 
   return (
     <>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-        <Root/>
+        {children}
       </ThemeProvider>
     </>
   );
