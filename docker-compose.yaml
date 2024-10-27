@@ -8,9 +8,19 @@ services:
     ports:
       - "8080:8080"
     networks:
-      - backend-network
+      - app-network
+    restart: always
+
+  frontend-app:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"  # Maps port 80 of the container to port 80 on the host
+    networks:
+      - app-network
     restart: always
 
 networks:
-  backend-network:
+  app-network:
     driver: bridge
