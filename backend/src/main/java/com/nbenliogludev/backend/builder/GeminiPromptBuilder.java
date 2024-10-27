@@ -7,7 +7,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class GeminiPromptBuilder {
 
-    public String buildPrompt(String prompt) {
+    public String buildPrompt(String mainCategory, String innerCategory, String age, String detail, String additionalInfo) {
+        // Construct the prompt content based on all parameters
+        String fullPrompt = String.format(
+                "Generate content for the category: %s with a focus on %s. Simplify for age %s. Detail level: %s. Additional information: %s.",
+                mainCategory, innerCategory, age, detail, additionalInfo
+        );
+
         JSONObject promptJson = new JSONObject();
         JSONArray contentsArray = new JSONArray();
         JSONObject contentsObject = new JSONObject();
@@ -15,7 +21,7 @@ public class GeminiPromptBuilder {
 
         JSONArray partsArray = new JSONArray();
         JSONObject partsObject = new JSONObject();
-        partsObject.put("text", prompt);
+        partsObject.put("text", fullPrompt);
         partsArray.add(partsObject);
         contentsObject.put("parts", partsArray);
 
@@ -42,7 +48,6 @@ public class GeminiPromptBuilder {
         dangerousContentSetting.put("threshold", "BLOCK_ONLY_HIGH");
         safetySettingsArray.add(dangerousContentSetting);
 
-        // Adding more safety settings as required...
         return safetySettingsArray;
     }
 

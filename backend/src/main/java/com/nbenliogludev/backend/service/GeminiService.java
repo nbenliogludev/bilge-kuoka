@@ -14,7 +14,6 @@ public class GeminiService {
 
     private static final Logger logger = LoggerFactory.getLogger(GeminiService.class);
 
-    // Inject values from the properties file
     @Value("${gemini.model}")
     private String geminiModel;
 
@@ -33,24 +32,24 @@ public class GeminiService {
         this.geminiPromptBuilder = geminiPromptBuilder;
     }
 
-    public String chat(String prompt) {
-        // Add the previous conversation history to the prompt
-        String fullPrompt = !Strings.isBlank(conversationHistory) ? "[Context]" + conversationHistory + " [Content] " + prompt : prompt;
-
-        // Build the prompt body
-        String requestBody = geminiPromptBuilder.buildPrompt(fullPrompt);
+    public String generateContent(String mainCategory, String innerCategory, String age, String detail, String additionalInfo) {
+        // Build the request body for the Gemini API using all parameters
+        String requestBody = geminiPromptBuilder.buildPrompt(mainCategory, innerCategory, age, detail, additionalInfo);
 
         // Make the API request
         String response = geminiApiClient.sendPostRequest(geminiModel, apiKey, requestBody);
 
         // Parse and handle response
-        return handleResponse(response, prompt);
+        return handleResponse(response, mainCategory + " - " + innerCategory);
     }
 
     private String handleResponse(String response, String prompt) {
         try {
+            // Parse the API response text
             String responseText = geminiResponseParser.parseResponse(response);
-            conversationHistory += prompt + "\n" + responseText + "\n"; // Update conversation history
+
+            // Update conversation history with the new request and response
+            conversationHistory += prompt + "\n" + responseText + "\n";
             return responseText;
         } catch (Exception e) {
             logger.error("Error in Parsing", e);
