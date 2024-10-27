@@ -43,13 +43,13 @@ const items = [
 
 export function AppSidebar() {
     const {
-        state,
-        open,
-        setOpen,
-        openMobile,
-        setOpenMobile,
-        isMobile,
-        toggleSidebar,
+        // state,
+        // open,
+        // setOpen,
+        // openMobile,
+        // setOpenMobile,
+        // isMobile,
+        // toggleSidebar,
       } = useSidebar()
   return (
     <Sidebar collapsible="offcanvas">
