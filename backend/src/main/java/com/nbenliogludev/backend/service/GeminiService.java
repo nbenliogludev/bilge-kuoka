@@ -2,12 +2,15 @@ package com.nbenliogludev.backend.service;
 
 import com.nbenliogludev.backend.builder.GeminiPromptBuilder;
 import com.nbenliogludev.backend.client.GeminiClient;
+import com.nbenliogludev.backend.dto.CategoriesResponse;
 import com.nbenliogludev.backend.parser.GeminiResponseParser;
-import org.apache.logging.log4j.util.Strings;
+import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class GeminiService {
@@ -20,8 +23,6 @@ public class GeminiService {
     @Value("${gemini.api-key}")
     private String apiKey;
 
-    private String conversationHistory = "";
-
     private final GeminiClient geminiApiClient;
     private final GeminiResponseParser geminiResponseParser;
     private final GeminiPromptBuilder geminiPromptBuilder;
@@ -32,28 +33,44 @@ public class GeminiService {
         this.geminiPromptBuilder = geminiPromptBuilder;
     }
 
+    // Existing generateContent method
     public String generateContent(String mainCategory, String innerCategory, String age, String detail, String additionalInfo) {
-        // Build the request body for the Gemini API using all parameters
         String requestBody = geminiPromptBuilder.buildPrompt(mainCategory, innerCategory, age, detail, additionalInfo);
-
-        // Make the API request
         String response = geminiApiClient.sendPostRequest(geminiModel, apiKey, requestBody);
 
-        // Parse and handle response
-        return handleResponse(response, mainCategory + " - " + innerCategory);
+        try {
+            return geminiResponseParser.parseResponse(response);
+        } catch (ParseException e) {
+            logger.error("Failed to parse response from Gemini API: {}", response, e);
+            throw new RuntimeException("Failed to parse response from Gemini API", e);
+        }
     }
 
-    private String handleResponse(String response, String prompt) {
-        try {
-            // Parse the API response text
-            String responseText = geminiResponseParser.parseResponse(response);
+    // Method for categories based on query
+    public CategoriesResponse getCategoriesByQuery(String query) {
+        String requestBody = geminiPromptBuilder.buildCategoryQueryPromptInTurkish(query);
+        String response = geminiApiClient.sendPostRequest(geminiModel, apiKey, requestBody);
 
-            // Update conversation history with the new request and response
-            conversationHistory += prompt + "\n" + responseText + "\n";
-            return responseText;
-        } catch (Exception e) {
-            logger.error("Error in Parsing", e);
-            throw new RuntimeException("Failed to parse the response");
+        try {
+            List<String> categories = geminiResponseParser.parseCategoryResponse(response);
+            return new CategoriesResponse(categories);
+        } catch (ParseException e) {
+            logger.error("Failed to parse response from Gemini API: {}", response, e);
+            throw new RuntimeException("Failed to parse response from Gemini API", e);
+        }
+    }
+
+    // New method for inner categories based on category and query
+    public CategoriesResponse getInnerCategoriesByQuery(String category, String query) {
+        String requestBody = geminiPromptBuilder.buildInnerCategoryQueryPromptInTurkish(category, query);
+        String response = geminiApiClient.sendPostRequest(geminiModel, apiKey, requestBody);
+
+        try {
+            List<String> innerCategories = geminiResponseParser.parseCategoryResponse(response);
+            return new CategoriesResponse(innerCategories);
+        } catch (ParseException e) {
+            logger.error("Failed to parse response from Gemini API: {}", response, e);
+            throw new RuntimeException("Failed to parse response from Gemini API", e);
         }
     }
 }
