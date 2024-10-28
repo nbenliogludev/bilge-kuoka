@@ -7,13 +7,28 @@ import org.springframework.stereotype.Component;
 @Component
 public class GeminiPromptBuilder {
 
+    // Method for content generation prompt
     public String buildPrompt(String mainCategory, String innerCategory, String age, String detail, String additionalInfo) {
-        // Construct the prompt content based on all parameters
         String fullPrompt = String.format(
-                "Generate content for the category: %s with a focus on %s. Simplify for age %s. Detail level: %s. Additional information: %s.",
+                "Generate content for category '%s' with a focus on '%s'. Target age: %s. Detail level: %s. Additional information: %s.",
                 mainCategory, innerCategory, age, detail, additionalInfo
         );
+        return buildJsonRequest(fullPrompt);
+    }
 
+    // Existing method for category queries
+    public String buildCategoryQueryPromptInTurkish(String query) {
+        String prompt = String.format("'%s' ile başlayan kategorileri Türkçe isimleriyle listele, örneğin matematik, biyoloji gibi.", query);
+        return buildJsonRequest(prompt);
+    }
+
+    // New method for inner category queries
+    public String buildInnerCategoryQueryPromptInTurkish(String category, String query) {
+        String prompt = String.format("'%s' ana kategorisi altındaki, '%s' ile başlayan alt kategorileri Türkçe isimleriyle listele.", category, query);
+        return buildJsonRequest(prompt);
+    }
+
+    private String buildJsonRequest(String fullPrompt) {
         JSONObject promptJson = new JSONObject();
         JSONArray contentsArray = new JSONArray();
         JSONObject contentsObject = new JSONObject();
@@ -35,14 +50,11 @@ public class GeminiPromptBuilder {
 
     private JSONArray getSafetySettings() {
         JSONArray safetySettingsArray = new JSONArray();
-
-        // Adding safety settings for hate speech
         JSONObject hateSpeechSetting = new JSONObject();
         hateSpeechSetting.put("category", "HARM_CATEGORY_HATE_SPEECH");
         hateSpeechSetting.put("threshold", "BLOCK_ONLY_HIGH");
         safetySettingsArray.add(hateSpeechSetting);
 
-        // Adding safety settings for dangerous content
         JSONObject dangerousContentSetting = new JSONObject();
         dangerousContentSetting.put("category", "HARM_CATEGORY_DANGEROUS_CONTENT");
         dangerousContentSetting.put("threshold", "BLOCK_ONLY_HIGH");

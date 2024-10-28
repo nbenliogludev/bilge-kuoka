@@ -3,11 +3,10 @@ package com.nbenliogludev.backend.dto;
 public class GenerateContentRequest {
     private String mainCategory;
     private String innerCategory;
-    private String age; // Change to String
+    private String age;
     private String detail;
     private String additionalInfo;
 
-    // Getters and Setters
     public String getMainCategory() {
         return mainCategory;
     }
