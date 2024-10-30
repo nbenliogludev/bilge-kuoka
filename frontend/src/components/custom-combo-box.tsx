@@ -21,11 +21,13 @@ import {
 
 interface CustomComboBoxProps {
   data: {label: string, value: string}[]
+  label: string,
+  value: string,
+  setValue: (value: string) => void
 }
 
-export function CustomComboBox({data}: CustomComboBoxProps) {
+export function CustomComboBox({data, label, value, setValue}: CustomComboBoxProps) {
   const [open, setOpen] = React.useState(false)
-  const [value, setValue] = React.useState("")
 
   console.log(value)
 
@@ -40,17 +42,17 @@ export function CustomComboBox({data}: CustomComboBoxProps) {
         >
           {value
             ? data.find((framework) => framework.value === value)?.label ?? value
-            : "Select framework..."}
+            : label}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0">
         <Command>
-          <CommandInput placeholder="Search framework..." onValueChange={(currentValue) => {
+          <CommandInput placeholder={`${label} giriniz`} onValueChange={(currentValue) => {
                     setValue(currentValue === value ? "" : currentValue)
                   }} />
           <CommandList>
-            <CommandEmpty>No framework found.</CommandEmpty>
+            <CommandEmpty>Sonuç bulunamadı.</CommandEmpty>
             <CommandGroup>
               {data.map((framework) => (
                 <CommandItem
