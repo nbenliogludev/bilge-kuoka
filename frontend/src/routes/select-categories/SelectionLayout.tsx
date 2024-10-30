@@ -9,6 +9,7 @@ import Category from "./steps/Category";
 import SubCategory from "./steps/SubCategory";
 import AdditionalInfo from "./steps/AdditionalInfo";
 import LevelOfDetail from "./steps/LevelOfDetail";
+import Logo from "@/components/Logo";
 
 interface Step {
   number: number;
@@ -43,37 +44,45 @@ export default function SelectCategories() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="bg-white shadow-lg rounded-lg mx-auto p-6 space-y-6">
-        <div className="flex justify-center">
-          {/* <Image src="/me.png" width={150} height={150} alt="hacene" /> */}
+    <div className="flex flex-col items-center min-h-screen bg-gray-100">
+      <div className="flex flex-col items-center text-center m-8">
+        <Logo />
+        <h1 className="font-bold text-3xl">Bilge Kuoka</h1>
+      </div>
+
+      <div className="flex m-4 items-center">
+        <div className="bg-white shadow-lg rounded-lg mx-auto p-6 space-y-6">
+          <div className="flex justify-center">
+          </div>
+          <div className="flex justify-center items-center text-center">
+            <h1 className="font-normal text-2xl">
+              {steps[currentStep - 1].label}
+            </h1>
+          </div>
+          <AnimatedStepper
+            steps={steps}
+            currentStep={currentStep}
+            onStepClick={handleStepClick}
+          />
+          <div className="flex justify-center items-center">
+            {React.createElement(steps[currentStep - 1].component, {})}
+          </div>
+          <div className="mt-8 flex justify-between select-none">
+            <Button
+              onClick={handlePrev}
+              variant="secondary"
+              disabled={currentStep === 1}
+            >
+              Önceki
+            </Button>
+            <Button
+              onClick={handleNext}
+              disabled={currentStep === steps.length}
+            >
+              Sonraki
+            </Button>
+          </div>
         </div>
-        <div className="space-y-4 text-center">
-          <h1 className="font-bold text-3xl">Bilge Kuoka</h1>
-          <h1 className="font-normal text-2xl">{steps[currentStep - 1].label}</h1>
-        </div>
-        <AnimatedStepper
-          steps={steps}
-          currentStep={currentStep}
-          onStepClick={handleStepClick}
-        />
-        <div className="flex justify-center items-center">
-          {React.createElement(steps[currentStep - 1].component, {})}
-        </div>
-        {/* <CustomComboBox data={frameworks} label="ege" /> */}
-        <div className="mt-8 flex justify-between select-none">
-          <Button
-            onClick={handlePrev}
-            variant="secondary"
-            disabled={currentStep === 1}
-          >
-            Önceki
-          </Button>
-          <Button onClick={handleNext} disabled={currentStep === steps.length}>
-            Sonraki
-          </Button>
-        </div>
-        {/* <Link href={'/'} className="select-none text-foreground text-xs hover:text-zinc-800">see our Original version</Link> */}
       </div>
     </div>
   );
