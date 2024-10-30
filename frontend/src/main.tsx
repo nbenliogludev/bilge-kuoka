@@ -6,13 +6,32 @@ import {
 } from "react-router-dom"
 import './index.css'
 import ErrorPage from './error-page';
-import App from './App';
+import Stats from './routes/stats';
+import Root from './routes/root';
+import SelectCategoriesPage from './routes/select-categories/SelectionLayout';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App/>,
+    element: <Root/>,
     errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "stats",
+        element: <Stats />,
+      },
+    ],
+  },
+  {
+    path: "/select-categories",
+    element: <SelectCategoriesPage/>,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "stats",
+        element: <Stats />,
+      },
+    ],
   },
 ]);
 
