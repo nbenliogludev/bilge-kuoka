@@ -33,7 +33,6 @@ public class GeminiService {
         this.geminiPromptBuilder = geminiPromptBuilder;
     }
 
-    // Existing generateContent method
     public String generateContent(String mainCategory, String innerCategory, String age, String detail, String additionalInfo) {
         String requestBody = geminiPromptBuilder.buildPrompt(mainCategory, innerCategory, age, detail, additionalInfo);
         String response = geminiApiClient.sendPostRequest(geminiModel, apiKey, requestBody);
@@ -52,7 +51,7 @@ public class GeminiService {
         String response = geminiApiClient.sendPostRequest(geminiModel, apiKey, requestBody);
 
         try {
-            List<String> categories = geminiResponseParser.parseCategoryResponse(response);
+            List<CategoriesResponse.Category> categories = geminiResponseParser.parseCategoryResponse(response);
             return new CategoriesResponse(categories);
         } catch (ParseException e) {
             logger.error("Failed to parse response from Gemini API: {}", response, e);
@@ -60,13 +59,13 @@ public class GeminiService {
         }
     }
 
-    // New method for inner categories based on category and query
+    // Updated method for inner categories based on category and query
     public CategoriesResponse getInnerCategoriesByQuery(String category, String query) {
         String requestBody = geminiPromptBuilder.buildInnerCategoryQueryPromptInTurkish(category, query);
         String response = geminiApiClient.sendPostRequest(geminiModel, apiKey, requestBody);
 
         try {
-            List<String> innerCategories = geminiResponseParser.parseCategoryResponse(response);
+            List<CategoriesResponse.Category> innerCategories = geminiResponseParser.parseInnerCategoryResponse(response);
             return new CategoriesResponse(innerCategories);
         } catch (ParseException e) {
             logger.error("Failed to parse response from Gemini API: {}", response, e);
