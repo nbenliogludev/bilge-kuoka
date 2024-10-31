@@ -49,3 +49,6 @@ const useContentStore = create<StockStore>((set) => ({
 export const useContentStoreActions = () => useContentStore((state) => state.actions);
 export const useAgeRange = () => useContentStore((state) => state.content.age);
 export const useMainCategory = () => useContentStore((state) => state.content.mainCategory);
+export const useSubCategory = () => useContentStore((state) => state.content.innerCategory);
+export const useLevelOfDetail = () => useContentStore((state) => state.content.detail);
+export const useAdditionalInfo = () => useContentStore((state) => state.content.additionalInfo);

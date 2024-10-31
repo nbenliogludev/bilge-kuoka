@@ -1,6 +1,10 @@
 import { CustomComboBox } from "@/components/custom-combo-box";
 import { useEffect, useState } from "react";
 import { useContentStoreActions, useMainCategory } from "../store/contentStore";
+import axios from "axios";
+import {
+  useQuery,
+} from '@tanstack/react-query'
 
 const mainCategories = [
   {
@@ -37,24 +41,40 @@ const mainCategories = [
   },
 ];
 
+const fetchCategories = async (query: string) => {
+  const { data } = await axios.get("http://45.147.46.138:8080/api/categories", {
+    params: { query }, // query parametresini URL'ye ekliyoruz
+  });
+  return data;
+};
+
 const Category = () => {
   const storedMainCategory = useMainCategory();
-  const [mainCategory, setMainCategory] = useState(storedMainCategory || "");
+  const [searchValue, setSearchValue] = useState(storedMainCategory || "");
   const { updateContent: updateMainCategoryInStore } = useContentStoreActions();
+
+  const { data, error, isLoading } = useQuery({
+    queryKey: ["query", searchValue],
+    queryFn: () => fetchCategories(searchValue),
+    enabled: !!searchValue,
+  });
+
+  console.log(data, 'payload')
+  
 
   useEffect(() => {
     return () => {
-        updateMainCategoryInStore({ mainCategory: mainCategory });
+        updateMainCategoryInStore({ mainCategory: searchValue });
     };
-  }, [mainCategory, updateMainCategoryInStore]);
+  }, [searchValue, updateMainCategoryInStore]);
 
   return (
     <div>
       <CustomComboBox
         data={mainCategories}
         label="Kategori"
-        value={mainCategory}
-        setValue={setMainCategory}
+        value={searchValue}
+        setValue={setSearchValue}
       />
     </div>
   );

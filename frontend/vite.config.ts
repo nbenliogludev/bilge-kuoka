@@ -10,4 +10,13 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  server: {
+    proxy: {
+      '/categories': {
+        target: 'http://45.147.46.138:8080/api', // Gerçek API adresiniz
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/categories/, '/categories')
+      }
+    }
+  }
 })
