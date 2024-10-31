@@ -13,7 +13,6 @@ public class GeminiController {
     @Autowired
     private GeminiService geminiService;
 
-    // Existing generateContent endpoint
     @PostMapping("/generateContent")
     public String generateContent(@RequestBody GenerateContentRequest request) {
         return geminiService.generateContent(
@@ -25,13 +24,11 @@ public class GeminiController {
         );
     }
 
-    // Endpoint to retrieve main categories by query
     @GetMapping("/categories")
     public CategoriesResponse getCategoriesByQuery(@RequestParam String query) {
         return geminiService.getCategoriesByQuery(query);
     }
 
-    // Endpoint to retrieve inner categories by category and query
     @GetMapping("/inner-categories")
     public CategoriesResponse getInnerCategoriesByQuery(@RequestParam String category, @RequestParam String query) {
         return geminiService.getInnerCategoriesByQuery(category, query);
