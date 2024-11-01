@@ -18,18 +18,18 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import { Icons } from "./ui/icons"
 
 interface CustomComboBoxProps {
   data: {label: string, value: string}[]
+  loading?: boolean
   label: string,
   value: string,
   setValue: (value: string) => void
 }
 
-export function CustomComboBox({data, label, value, setValue}: CustomComboBoxProps) {
+export function CustomComboBox({data, loading, label, value, setValue}: CustomComboBoxProps) {
   const [open, setOpen] = React.useState(false)
-
-  console.log(value)
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -38,7 +38,7 @@ export function CustomComboBox({data, label, value, setValue}: CustomComboBoxPro
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[200px] justify-between"
+          className="w-[240px] justify-between"
         >
           {value
             ? data.find((framework) => framework.value === value)?.label ?? value
@@ -46,18 +46,24 @@ export function CustomComboBox({data, label, value, setValue}: CustomComboBoxPro
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
+      <PopoverContent className="w-[240px] p-0">
         <Command>
           <CommandInput placeholder={`${label} giriniz`} onValueChange={(currentValue) => {
                     setValue(currentValue === value ? "" : currentValue)
                   }} />
           <CommandList>
-            <CommandEmpty>Sonuç bulunamadı.</CommandEmpty>
+            {loading && (
+              <span className="flex items-center justify-center m-4">
+                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+              </span>
+            )}
+            {!loading && <CommandEmpty>Sonuç bulunamadı.</CommandEmpty>}
+            
             <CommandGroup>
-              {data.map((framework) => (
+              {data.map((item) => (
                 <CommandItem
-                  key={framework.value}
-                  value={framework.value}
+                  key={item.value}
+                  value={item.label}
                   onSelect={(currentValue) => {
                     setValue(currentValue === value ? "" : currentValue)
                     setOpen(false)
@@ -66,10 +72,10 @@ export function CustomComboBox({data, label, value, setValue}: CustomComboBoxPro
                   <Check
                     className={cn(
                       "mr-2 h-4 w-4",
-                      value === framework.value ? "opacity-100" : "opacity-0"
+                      value === item.value ? "opacity-100" : "opacity-0"
                     )}
                   />
-                  {framework.label}
+                  {item.label}
                 </CommandItem>
               ))}
             </CommandGroup>
