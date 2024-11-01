@@ -53,7 +53,7 @@ const Category = () => {
   const [searchValue, setSearchValue] = useState(storedMainCategory || "");
   const { updateContent: updateMainCategoryInStore } = useContentStoreActions();
 
-  const { data, error, isLoading } = useQuery({
+  const { data} = useQuery({
     queryKey: ["query", searchValue],
     queryFn: () => fetchCategories(searchValue),
     enabled: !!searchValue,
