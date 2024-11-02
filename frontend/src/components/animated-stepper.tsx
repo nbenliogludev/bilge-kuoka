@@ -88,8 +88,8 @@ const AnimatedStepper: React.FC<StepperProps> = ({
                                     className={cn(
                                         "mt-2 text-xs text-center w-20",
                                         step.number === currentStep
-                                            ? "text-black font-bold"
-                                            : "text-black"
+                                            ? "text-secondary-foreground font-bold"
+                                            : "text-secondary-foreground"
                                     )}
                                     initial={{ opacity: 0.5 }}
                                     animate={{
