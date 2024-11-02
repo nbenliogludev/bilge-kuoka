@@ -27,9 +27,7 @@ const Category = () => {
   console.log(data?.data, 'payload')
 
   useEffect(() => {
-    return () => {
-        updateMainCategoryInStore({ mainCategory: searchValue });
-    };
+    updateMainCategoryInStore({ mainCategory: searchValue });
   }, [searchValue, updateMainCategoryInStore]);
 
   return (

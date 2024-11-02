@@ -30,10 +30,10 @@ const AgeRange = () => {
   const [ageRange, setAgeRange] = useState(storedAgeRange || "");
   const { updateContent: updateAgeRangeInStore } = useContentStoreActions();
 
+  console.log("ageRange", ageRange);
+
   useEffect(() => {
-    return () => {
-      updateAgeRangeInStore({ age: ageRange });
-    };
+    updateAgeRangeInStore({ age: ageRange });
   }, [ageRange, updateAgeRangeInStore]);
 
   return (
