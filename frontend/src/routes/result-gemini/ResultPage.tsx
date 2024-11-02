@@ -12,22 +12,23 @@ const ResultPage = () => {
   const content = contentArray.join("\n");
 
   return (
-    <div className="flex flex-col items-center mt-4">
-      <div className="flex flex-col items-center text-center m-8">
+    <div className="flex flex-col items-center mt-2">
+      <div className="flex flex-col items-center text-center m-3">
         <h1 className="font-bold text-3xl">
           <MarkdownRenderer markdownText={header} />
         </h1>
       </div>
 
-      <div className="flex m-8 items-center">
+      {/* Article Hints Section with adjusted spacing */}
+
+      <div className="flex m-3 items-center">
         <div className="bg-white dark:bg-primary-foreground border-[1px] shadow-lg rounded-lg mx-auto p-6 space-y-6">
           <MarkdownRenderer markdownText={content} />
         </div>
       </div>
 
-      {/* Article Hints Section */}
-      <div className="w-full p-6">
-        <ArticleHints text={content} numberOfHints={4} /> {/* Pass relevant props */}
+      <div className="w-full mt-2 mb-4"> {/* Adjusted top and bottom margins */}
+        <ArticleHints text={content} numberOfHints={4} />
       </div>
     </div>
   );
