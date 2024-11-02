@@ -47,12 +47,13 @@ export default function SelectCategories() {
   };
 
   const handleStepClick = (stepNumber: number) => {
-    setCurrentStep(stepNumber);
+    if(checkIfStepIsCompleted(stepNumber - 1)){
+      setCurrentStep(stepNumber);
+    }
   };
 
-  const checkIfStepIsCompleted = () => {
-    // return steps.slice(0, stepNumber).every((step) => contentObject[step.storeObjectKey]);
-    return steps.slice(0, currentStep).every((step) => {
+  const checkIfStepIsCompleted = (stepNumber: number) => {
+    return steps.slice(0, stepNumber).every((step) => {
       const value = contentObject[step.storeObjectKey as keyof typeof contentObject];
       return value !== "" && value !== null && value !== undefined;
     });
@@ -111,7 +112,7 @@ export default function SelectCategories() {
             ) : (
               <Button
                 onClick={handleNext}
-                disabled={currentStep === steps.length || !checkIfStepIsCompleted()}
+                disabled={currentStep === steps.length || !checkIfStepIsCompleted(currentStep)}
               >
                 Sonraki
               </Button>
