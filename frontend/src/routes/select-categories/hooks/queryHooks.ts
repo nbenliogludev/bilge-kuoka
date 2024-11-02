@@ -15,6 +15,8 @@ const postCategoryData = async (categoryData: {
 
 export const usePostCategoryData = () => {
     return useMutation({
-      mutationFn: postCategoryData
+      mutationFn: postCategoryData,
+      retry: 5,
+      retryDelay: attemptIndex => Math.min(1000 * 2 ** attemptIndex, 30000),
     });
   };
