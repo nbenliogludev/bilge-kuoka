@@ -3,6 +3,7 @@ package com.nbenliogludev.backend.controller;
 import com.nbenliogludev.backend.dto.CategoriesResponse;
 import com.nbenliogludev.backend.dto.ContentResponse;
 import com.nbenliogludev.backend.dto.GenerateContentRequest;
+import com.nbenliogludev.backend.dto.RelatedArticlesRequest;
 import com.nbenliogludev.backend.service.GeminiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -33,5 +34,10 @@ public class GeminiController {
     @GetMapping("/inner-categories")
     public CategoriesResponse getInnerCategoriesByQuery(@RequestParam String category, @RequestParam String query) {
         return geminiService.getInnerCategoriesByQuery(category, query);
+    }
+
+    @PostMapping("/related-articles")
+    public ContentResponse getRelatedArticles(@RequestBody RelatedArticlesRequest request) {
+        return geminiService.getRelatedArticles(request.getArticle());
     }
 }

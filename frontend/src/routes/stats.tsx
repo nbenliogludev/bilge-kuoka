@@ -1,18 +1,12 @@
-import { Card } from "@/components/ui/card";
+import ArticleHints from "@/components/article-hints";
 
 export default function Stats() {
-    return (
-      <>
-        <h1 className="text-2xl font-semibold">Stats</h1>
-        <p className="text-gray-500">Welcome to the stats page.</p>
-        <Card>
-    <a href="#">
-      <div className="font-bold text-lg">Quick start</div>
-      <div className="text-gray-500 text-sm">
-        Start building your next project in minutes
-      </div>
-    </a>
-  </Card>
-      </>
-    );
-  }
+  return (
+    <div className="w-full">
+      <h1 className="text-2xl font-semibold">Stats</h1>
+      <p className="text-gray-500">Welcome to the stats page.</p>
+      <h1 className="text-2xl font-bold mb-4">Article Hints</h1>
+      <ArticleHints text={"This is a helpful hint to guide you through the article."} numberOfHints={3} />
+    </div>
+  );
+}

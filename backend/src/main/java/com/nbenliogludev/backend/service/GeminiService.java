@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class GeminiService {
@@ -70,6 +71,22 @@ public class GeminiService {
         try {
             List<CategoriesResponse.Category> innerCategories = geminiResponseParser.parseInnerCategoryResponse(response);
             return new CategoriesResponse(innerCategories);
+        } catch (ParseException e) {
+            logger.error("Failed to parse response from Gemini API: {}", response, e);
+            throw new RuntimeException("Failed to parse response from Gemini API", e);
+        }
+    }
+
+    public ContentResponse getRelatedArticles(String article) {
+        String requestBody = geminiPromptBuilder.buildRelatedArticlesPrompt(article);
+        String response = geminiApiClient.sendPostRequest(geminiModel, apiKey, requestBody);
+
+        try {
+            List<String> articles = geminiResponseParser.parseResponseToList(response);
+
+            // Limit to 4 articles
+            List<String> limitedArticles = articles.stream().limit(4).collect(Collectors.toList());
+            return new ContentResponse(limitedArticles);
         } catch (ParseException e) {
             logger.error("Failed to parse response from Gemini API: {}", response, e);
             throw new RuntimeException("Failed to parse response from Gemini API", e);

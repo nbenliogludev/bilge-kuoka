@@ -80,4 +80,25 @@ public class GeminiResponseParser {
         }
         return categories;
     }
+
+    public List<String> parseResponseToList(String jsonResponse) throws ParseException {
+        JSONObject jsonObject = (JSONObject) new JSONParser().parse(jsonResponse);
+        JSONArray candidatesArray = (JSONArray) jsonObject.get("candidates");
+
+        if (candidatesArray == null || candidatesArray.isEmpty()) {
+            throw new ParseException(ParseException.ERROR_UNEXPECTED_TOKEN, "Missing 'candidates' array in response");
+        }
+
+        List<String> articles = new ArrayList<>();
+        for (Object candidate : candidatesArray) {
+            JSONObject candidateObject = (JSONObject) candidate;
+            JSONObject contentObject = (JSONObject) candidateObject.get("content");
+            JSONArray partsArray = (JSONArray) contentObject.get("parts");
+            JSONObject partObject = (JSONObject) partsArray.get(0);
+
+            articles.add((String) partObject.get("text"));
+        }
+
+        return articles;
+    }
 }
