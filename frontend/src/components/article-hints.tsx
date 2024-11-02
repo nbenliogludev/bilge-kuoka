@@ -22,6 +22,7 @@ const ArticleHints: React.FC<ArticleHintsProps> = ({ text, numberOfHints }) => {
         queryFn: () => fetchRelatedArticles(text),
         enabled: !!text,
     });
+    console.log(text);
 
     return (
         <ScrollArea className="w-full p-4 rounded-md" dir="ltr">
@@ -37,7 +38,6 @@ const ArticleHints: React.FC<ArticleHintsProps> = ({ text, numberOfHints }) => {
                     data?.data?.slice(0, numberOfHints).map((articleTitle: string, index: number) => (
                         <Card key={index} className="w-full">
                             <a href="#">
-                                <div className="font-bold text-lg">Hint {index + 1}</div>
                                 <div className="text-gray-500 text-sm">
                                     {articleTitle}
                                 </div>

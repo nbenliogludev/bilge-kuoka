@@ -27,8 +27,7 @@ const ResultPage = () => {
 
       {/* Article Hints Section */}
       <div className="w-full p-6">
-        <h2 className="font-semibold text-2xl text-center mb-4">Related Articles</h2>
-        <ArticleHints text={header} numberOfHints={4} /> {/* Pass relevant props */}
+        <ArticleHints text={content} numberOfHints={4} /> {/* Pass relevant props */}
       </div>
     </div>
   );

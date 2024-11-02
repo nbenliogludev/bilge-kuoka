@@ -70,13 +70,14 @@ public class GeminiPromptBuilder {
         return parametersJson;
     }
 
-    public String buildRelatedArticlesPrompt(String article) {
+    public String buildRelatedArticlesPrompt(String article, String language) {
         String fullPrompt = String.format(
-                "Provide the titles of four distinct articles related to the topic '%s'. Each title should be clearly listed as a separate item.",
-                article
+                "Provide the titles of four distinct articles related to the topic '%s' in %s. Each title should be clearly listed as a separate item.",
+                article, language
         );
         return buildJsonRequest(fullPrompt);
     }
+
 
 
 }

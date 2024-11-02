@@ -78,12 +78,14 @@ public class GeminiService {
     }
 
     public ContentResponse getRelatedArticles(String article) {
-        String requestBody = geminiPromptBuilder.buildRelatedArticlesPrompt(article);
+        // Detect language - for example, you could use a regex to check for certain characters or keywords
+        String language = article.matches(".*[ğüşöçİĞÜŞÖÇ].*") ? "Turkish" : "English"; // Simplified language detection
+        String requestBody = geminiPromptBuilder.buildRelatedArticlesPrompt(article, language);
         String response = geminiApiClient.sendPostRequest(geminiModel, apiKey, requestBody);
 
         try {
             List<String> titles = geminiResponseParser.parseResponseToList(response);
-            return new ContentResponse(titles);  // Return the list of titles as the data array
+            return new ContentResponse(titles);
         } catch (ParseException e) {
             logger.error("Failed to parse response from Gemini API: {}", response, e);
             throw new RuntimeException("Failed to parse response from Gemini API", e);

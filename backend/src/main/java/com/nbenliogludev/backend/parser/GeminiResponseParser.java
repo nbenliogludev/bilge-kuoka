@@ -98,13 +98,14 @@ public class GeminiResponseParser {
         JSONObject partObject = (JSONObject) partsArray.get(0);
         String responseText = (String) partObject.get("text");
 
-        // Split the response text to extract each title (e.g., assuming numbered or bullet format)
-        List<String> titles = Arrays.stream(responseText.split("\\d\\.\\s\\*\\*"))
+        // Split the response text to extract each title
+        List<String> titles = Arrays.stream(responseText.split("\n"))
                 .map(String::trim)
-                .filter(title -> !title.isEmpty())
+                .filter(line -> !line.isEmpty() && !line.startsWith("İşte konuyla ilgili"))  // Filter out the introductory line
                 .collect(Collectors.toList());
 
         // Limit to the first 4 titles if more are provided
         return titles.stream().limit(4).collect(Collectors.toList());
     }
+
 }
