@@ -80,7 +80,7 @@ public class GeminiService {
     public ContentResponse getRelatedArticles(String article) {
         // Detect language - for example, you could use a regex to check for certain characters or keywords
         String language = article.matches(".*[ğüşöçİĞÜŞÖÇ].*") ? "Turkish" : "English"; // Simplified language detection
-        String requestBody = geminiPromptBuilder.buildRelatedArticlesPrompt(article, language);
+        String requestBody = geminiPromptBuilder.buildRelatedArticlesPrompt(article);
         String response = geminiApiClient.sendPostRequest(geminiModel, apiKey, requestBody);
 
         try {
