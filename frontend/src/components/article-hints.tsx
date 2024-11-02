@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Card } from "./ui/card";
+import { Card, CardContent } from "./ui/card";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { baseApi } from "@/utils/api";
 import { useContent } from "@/routes/select-categories/store/contentStore";
+import { Icons } from "./ui/icons";
 
 interface ArticleHintsProps {
     text: string;
@@ -57,17 +58,20 @@ const ArticleHints: React.FC<ArticleHintsProps> = ({ text, numberOfHints }) => {
                 }}
             >
                 {isLoading ? (
-                    <div>Loading related articles...</div>
+                    <div><Icons.spinner className="mr-2 h-4 w-4 animate-spin" /></div>
                 ) : (
                     data?.data?.slice(0, numberOfHints).map((articleTitle: string, index: number) => (
                         <Card
                             key={index}
-                            className={`w-full cursor-pointer ${loadingTitle === articleTitle ? "opacity-50 pointer-events-none" : ""}`}
+                            className={`w-full cursor-pointer pt-6 ${loadingTitle === articleTitle ? "opacity-50 pointer-events-none" : ""}`}
                             onClick={() => handleHintClick(articleTitle)} // Call handleHintClick with title
                         >
-                            <div className="text-gray-500 text-sm">
-                                {loadingTitle === articleTitle ? "Loading..." : articleTitle}
-                            </div>
+                             <CardContent>
+                                <div className="text-sm">
+                                    {loadingTitle === articleTitle ? <Icons.spinner className="mr-2 h-4 w-4 animate-spin" /> : articleTitle}
+                                </div>
+                            </CardContent>
+                            
                         </Card>
                     ))
                 )}
