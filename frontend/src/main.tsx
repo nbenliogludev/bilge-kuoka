@@ -3,11 +3,11 @@ import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 import ErrorPage from "./error-page";
-import Stats from "./routes/stats";
 import Root from "./routes/root";
 import SelectCategoriesPage from "./routes/select-categories/SelectionLayout";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import App from "./App";
+import ResultPage from "./routes/result-gemini/ResultPage";
 
 const router = createBrowserRouter([
   {
@@ -16,8 +16,8 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "stats",
-        element: <Stats />,
+        path: "/:id",
+        element: <ResultPage />,
       },
     ],
   },
