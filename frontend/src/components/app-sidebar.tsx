@@ -14,7 +14,7 @@ import {
   SidebarTrigger,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ModeToggle } from "./mode-toggle";
 
 // Menu items.
@@ -46,13 +46,20 @@ export function AppSidebar() {
         // isMobile,
         // toggleSidebar,
       } = useSidebar()
+      
+      const navigate = useNavigate();
+    
+    const handleStartNewTab = () => {
+        navigate('/start')
+    }
+
   return (
     <Sidebar collapsible="offcanvas">
       <SidebarContent>
         <SidebarGroup>
           <SidebarTrigger />
           <SidebarGroupLabel>Bilge Quoka</SidebarGroupLabel>
-          <SidebarGroupAction title="Yeni bilge sekmesi">
+          <SidebarGroupAction title="Yeni bilge sekmesi" onClick={handleStartNewTab}>
             <Plus /> <span className="sr-only">Yeni Bilge sekmesi</span>
           </SidebarGroupAction>
           <SidebarGroupContent>
