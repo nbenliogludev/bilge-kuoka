@@ -3,6 +3,7 @@ package com.nbenliogludev.backend.service;
 import com.nbenliogludev.backend.builder.GeminiPromptBuilder;
 import com.nbenliogludev.backend.client.GeminiClient;
 import com.nbenliogludev.backend.dto.CategoriesResponse;
+import com.nbenliogludev.backend.dto.ContentResponse;
 import com.nbenliogludev.backend.parser.GeminiResponseParser;
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
@@ -10,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -33,12 +35,13 @@ public class GeminiService {
         this.geminiPromptBuilder = geminiPromptBuilder;
     }
 
-    public String generateContent(String mainCategory, String innerCategory, String age, String detail, String additionalInfo) {
+    public ContentResponse generateContent(String mainCategory, String innerCategory, String age, String detail, String additionalInfo) {
         String requestBody = geminiPromptBuilder.buildPrompt(mainCategory, innerCategory, age, detail, additionalInfo);
         String response = geminiApiClient.sendPostRequest(geminiModel, apiKey, requestBody);
 
         try {
-            return geminiResponseParser.parseResponse(response);
+            String content = geminiResponseParser.parseResponse(response);
+            return new ContentResponse(Collections.singletonList(content));  // Wrap content in a list
         } catch (ParseException e) {
             logger.error("Failed to parse response from Gemini API: {}", response, e);
             throw new RuntimeException("Failed to parse response from Gemini API", e);
