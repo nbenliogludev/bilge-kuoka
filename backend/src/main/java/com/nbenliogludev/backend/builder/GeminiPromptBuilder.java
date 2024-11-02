@@ -78,6 +78,14 @@ public class GeminiPromptBuilder {
         return buildJsonRequest(fullPrompt);
     }
 
+    public String buildFullArticlePrompt(String title, String age, String detail, String additionalInfo) {
+        String fullPrompt = String.format(
+                "Generate the full content for the article titled '%s'. Age: %s, Detail level: %s. Additional information: %s. The response should be in the same language as the article title provided.",
+                title, age, detail, additionalInfo
+        );
+        return buildJsonRequest(fullPrompt);
+    }
+
 
 
 }

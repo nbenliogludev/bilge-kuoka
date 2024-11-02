@@ -98,14 +98,16 @@ public class GeminiResponseParser {
         JSONObject partObject = (JSONObject) partsArray.get(0);
         String responseText = (String) partObject.get("text");
 
-        // Split the response text to extract each title
+        // Process each line, filtering out non-title lines and cleaning up titles
         List<String> titles = Arrays.stream(responseText.split("\n"))
                 .map(String::trim)
-                .filter(line -> !line.isEmpty() && !line.startsWith("İşte konuyla ilgili"))  // Filter out the introductory line
+                .filter(line -> !line.startsWith("İşte") && !line.isEmpty()) // Filter out the intro line
+                .map(line -> line.replaceAll("^[0-9]+\\.", "").replaceAll("\\*\\*", "").trim()) // Remove numbers and asterisks
                 .collect(Collectors.toList());
 
         // Limit to the first 4 titles if more are provided
         return titles.stream().limit(4).collect(Collectors.toList());
     }
+
 
 }
