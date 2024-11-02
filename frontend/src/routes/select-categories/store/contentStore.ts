@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-type Content = {
+export type Content = {
     mainCategory: string;
     innerCategory: string;
     age: string;
@@ -47,6 +47,7 @@ const useContentStore = create<StockStore>((set) => ({
 }));
 
 export const useContentStoreActions = () => useContentStore((state) => state.actions);
+export const useContent = () => useContentStore((state) => state.content)
 export const useAgeRange = () => useContentStore((state) => state.content.age);
 export const useMainCategory = () => useContentStore((state) => state.content.mainCategory);
 export const useSubCategory = () => useContentStore((state) => state.content.innerCategory);
