@@ -10,21 +10,28 @@ import SubCategory from "./steps/SubCategory";
 import AdditionalInfo from "./steps/AdditionalInfo";
 import LevelOfDetail from "./steps/LevelOfDetail";
 import Logo from "@/components/Logo";
+import { useContent } from "./store/contentStore";
+import { usePostCategoryData } from "./hooks/queryHooks";
 
 interface Step {
   number: number;
   label: string;
+  storeObjectKey: string;
   component: React.FC;
 }
 const steps: Step[] = [
-  { number: 1, label: "Yaş Aralığı", component: AgeRange },
-  { number: 2, label: "Kategori", component: Category },
-  { number: 3, label: "Konu", component: SubCategory },
-  { number: 4, label: "Ek Bilgi", component: AdditionalInfo },
-  { number: 5, label: "Detay", component: LevelOfDetail },
+  { number: 1, label: "Yaş Aralığı", storeObjectKey: "age", component: AgeRange },
+  { number: 2, label: "Kategori", storeObjectKey: "mainCategory", component: Category },
+  { number: 3, label: "Konu", storeObjectKey: "innerCategory", component: SubCategory },
+  { number: 4, label: "Ek Bilgi", storeObjectKey: "additionalInfo", component: AdditionalInfo },
+  { number: 5, label: "Detay", storeObjectKey: "detail", component: LevelOfDetail },
 ];
 
 export default function SelectCategories() {
+
+  const mutation = usePostCategoryData();
+  const contentObject = useContent()
+
   const [currentStep, setCurrentStep] = React.useState(1);
 
   const handleNext = () => {
@@ -41,6 +48,25 @@ export default function SelectCategories() {
 
   const handleStepClick = (stepNumber: number) => {
     setCurrentStep(stepNumber);
+  };
+
+  const checkIfStepIsCompleted = () => {
+    // return steps.slice(0, stepNumber).every((step) => contentObject[step.storeObjectKey]);
+    return steps.slice(0, currentStep).every((step) => {
+      const value = contentObject[step.storeObjectKey as keyof typeof contentObject];
+      return value !== "" && value !== null && value !== undefined;
+    });
+  }
+
+  const handleSubmit = () => {
+    mutation.mutate(contentObject, {
+      onSuccess: (data: string) => {
+        console.log("Data submitted successfully:", data);
+      },
+      onError: (error: unknown) => {
+        console.error("Error submitting data:", error);
+      }
+    });
   };
 
   return (
@@ -75,12 +101,22 @@ export default function SelectCategories() {
             >
               Önceki
             </Button>
-            <Button
-              onClick={handleNext}
-              disabled={currentStep === steps.length}
-            >
-              Sonraki
-            </Button>
+            {currentStep === steps.length ? (
+              <Button
+                disabled={currentStep !== steps.length}
+                onClick={handleSubmit}
+              >
+                Kuoka!
+              </Button>
+            ) : (
+              <Button
+                onClick={handleNext}
+                disabled={currentStep === steps.length || !checkIfStepIsCompleted()}
+              >
+                Sonraki
+              </Button>
+            )}
+            
           </div>
         </div>
       </div>
