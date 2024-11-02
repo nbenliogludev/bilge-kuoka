@@ -21,6 +21,8 @@ const SubCategory = () => {
     queryKey: ["query", searchValue],
     queryFn: () => fetchCategories(searchValue, storedCategory),
     enabled: !!searchValue,
+    retry: 5,
+    retryDelay: attemptIndex => Math.min(1000 * 2 ** attemptIndex, 30000),
   });
 
   useEffect(() => {

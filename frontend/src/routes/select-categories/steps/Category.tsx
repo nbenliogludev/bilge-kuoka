@@ -22,6 +22,8 @@ const Category = () => {
     queryKey: ["query", searchValue],
     queryFn: () => fetchCategories(searchValue),
     enabled: !!searchValue,
+    retry: 5,
+    retryDelay: attemptIndex => Math.min(1000 * 2 ** attemptIndex, 30000),
   });
 
   console.log(data?.data, 'payload')
