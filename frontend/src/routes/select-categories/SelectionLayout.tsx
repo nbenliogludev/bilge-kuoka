@@ -73,11 +73,13 @@ export default function SelectCategories() {
   return (
     <div className="flex flex-col items-center min-h-screen bg-gray-100 dark:bg-black">
       <div className="flex flex-col items-center text-center m-8">
-        <Logo />
-        <h1 className="font-bold text-3xl">Bilge Kuoka</h1>
+      <h1 className="font-bold text-3xl">Bilge Kuoka</h1>
+        <div className="absolute top-24">
+          <Logo />
+        </div>
       </div>
 
-      <div className="flex m-4 items-center">
+      <div className="flex m-4 items-center z-20 mt-[80px]">
         <div className="bg-white dark:bg-primary-foreground border-[1px] shadow-lg rounded-lg mx-auto p-6 space-y-6">
           <div className="flex justify-center">
           </div>
