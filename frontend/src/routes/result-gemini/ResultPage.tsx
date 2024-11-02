@@ -1,3 +1,4 @@
+import ArticleHints from "@/components/article-hints";
 import MarkdownRenderer from "@/utils/MarkDownRenderer";
 import { useLocation } from "react-router-dom";
 
@@ -8,7 +9,6 @@ const ResultPage = () => {
   };
 
   const [header, ...contentArray] = data.data[0].split("\n");
-
   const content = contentArray.join("\n");
 
   return (
@@ -23,6 +23,12 @@ const ResultPage = () => {
         <div className="bg-white dark:bg-primary-foreground border-[1px] shadow-lg rounded-lg mx-auto p-6 space-y-6">
           <MarkdownRenderer markdownText={content} />
         </div>
+      </div>
+
+      {/* Article Hints Section */}
+      <div className="w-full p-6">
+        <h2 className="font-semibold text-2xl text-center mb-4">Related Articles</h2>
+        <ArticleHints text={header} numberOfHints={4} /> {/* Pass relevant props */}
       </div>
     </div>
   );

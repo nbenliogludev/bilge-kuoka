@@ -9,7 +9,9 @@ import org.springframework.stereotype.Component;
 import com.nbenliogludev.backend.dto.CategoriesResponse;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class GeminiResponseParser {
@@ -81,6 +83,7 @@ public class GeminiResponseParser {
         return categories;
     }
 
+
     public List<String> parseResponseToList(String jsonResponse) throws ParseException {
         JSONObject jsonObject = (JSONObject) new JSONParser().parse(jsonResponse);
         JSONArray candidatesArray = (JSONArray) jsonObject.get("candidates");
@@ -89,16 +92,19 @@ public class GeminiResponseParser {
             throw new ParseException(ParseException.ERROR_UNEXPECTED_TOKEN, "Missing 'candidates' array in response");
         }
 
-        List<String> articles = new ArrayList<>();
-        for (Object candidate : candidatesArray) {
-            JSONObject candidateObject = (JSONObject) candidate;
-            JSONObject contentObject = (JSONObject) candidateObject.get("content");
-            JSONArray partsArray = (JSONArray) contentObject.get("parts");
-            JSONObject partObject = (JSONObject) partsArray.get(0);
+        JSONObject candidateObject = (JSONObject) candidatesArray.get(0);
+        JSONObject contentObject = (JSONObject) candidateObject.get("content");
+        JSONArray partsArray = (JSONArray) contentObject.get("parts");
+        JSONObject partObject = (JSONObject) partsArray.get(0);
+        String responseText = (String) partObject.get("text");
 
-            articles.add((String) partObject.get("text"));
-        }
+        // Split the response text to extract each title (e.g., assuming numbered or bullet format)
+        List<String> titles = Arrays.stream(responseText.split("\\d\\.\\s\\*\\*"))
+                .map(String::trim)
+                .filter(title -> !title.isEmpty())
+                .collect(Collectors.toList());
 
-        return articles;
+        // Limit to the first 4 titles if more are provided
+        return titles.stream().limit(4).collect(Collectors.toList());
     }
 }

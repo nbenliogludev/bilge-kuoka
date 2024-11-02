@@ -16,15 +16,6 @@ public class GeminiPromptBuilder {
         return buildJsonRequest(fullPrompt);
     }
 
-    // Method for related articles prompt
-    public String buildRelatedArticlesPrompt(String article) {
-        String fullPrompt = String.format(
-                "Generate a list of 4 related articles based on the topic '%s'. Each article should focus on different but relevant aspects of the main topic.",
-                article
-        );
-        return buildJsonRequest(fullPrompt);
-    }
-
     // Existing method for category queries
     public String buildCategoryQueryPromptInTurkish(String query) {
         String prompt = String.format("'%s' ile başlayan kategorileri Türkçe isimleriyle listele, örneğin matematik, biyoloji gibi.", query);
@@ -78,4 +69,14 @@ public class GeminiPromptBuilder {
         parametersJson.put("topP", 0.99);
         return parametersJson;
     }
+
+    public String buildRelatedArticlesPrompt(String article) {
+        String fullPrompt = String.format(
+                "Provide the titles of four distinct articles related to the topic '%s'. Each title should be clearly listed as a separate item.",
+                article
+        );
+        return buildJsonRequest(fullPrompt);
+    }
+
+
 }

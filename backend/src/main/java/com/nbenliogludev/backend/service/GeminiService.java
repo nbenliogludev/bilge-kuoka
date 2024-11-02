@@ -82,14 +82,12 @@ public class GeminiService {
         String response = geminiApiClient.sendPostRequest(geminiModel, apiKey, requestBody);
 
         try {
-            List<String> articles = geminiResponseParser.parseResponseToList(response);
-
-            // Limit to 4 articles
-            List<String> limitedArticles = articles.stream().limit(4).collect(Collectors.toList());
-            return new ContentResponse(limitedArticles);
+            List<String> titles = geminiResponseParser.parseResponseToList(response);
+            return new ContentResponse(titles);  // Return the list of titles as the data array
         } catch (ParseException e) {
             logger.error("Failed to parse response from Gemini API: {}", response, e);
             throw new RuntimeException("Failed to parse response from Gemini API", e);
         }
     }
+
 }
