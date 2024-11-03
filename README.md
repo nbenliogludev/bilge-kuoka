@@ -7,7 +7,7 @@
 ## Özellikler
 
 ### 1. **Kategori ve Alt Kategori Seçimi**
-   - Kullanıcılar, platforma giriş yaptıktan sonra ilgi duydukları bir kategori seçerler. Bu kategoriler, yapay zeka tarafından dinamik olarak oluşturulmaktadır ve kullanıcıya en alakalı seçenekleri sunar.
+   - Kullanıcılar ilgi duydukları bir kategori seçerler. Bu kategoriler, yapay zeka tarafından dinamik olarak oluşturulmaktadır ve kullanıcıya en alakalı seçenekleri sunar.
    - Kategori seçiminden sonra yapay zeka tarafından üretilen alt kategorilerle içerik daha spesifik hale gelir. Böylece kullanıcılar, aradıkları konuda derinlemesine bilgiye erişebilirler.
 
 ### 2. **Yaş ve Detay Seviyesi Ayarları**
@@ -34,5 +34,29 @@ Bilge-Kuoka'nın amacı, yapay zeka destekli bir bilgi edinme süreci sunarak ku
 Bilge-Kuoka, bilgiye hızlı ve etkili bir şekilde ulaşmak isteyen tüm kullanıcı kitlesine hitap eder. Özellikle öğrenciler, araştırmacılar ve bilgiye meraklı herkes, bu platform ile kapsamlı ve kişiselleştirilmiş bilgiye erişebilir.
 
 ---
+
+## Sunum Videosu
+
+Projemizi tanıtan kısa bir video sunumuna buradan ulaşabilirsiniz:
+[![Bilge-Kuoka Sunum Videosu](https://img.youtube.com/vi/YOUR_VIDEO_ID/0.jpg)](https://www.youtube.com/watch?v=YOUR_VIDEO_ID)
+
+Bu video, platformun işleyişini ve kullanıcı deneyimini daha iyi anlamanızı sağlayacaktır.
+
+## Ekran Görüntüleri
+
+Platformun çeşitli özelliklerini gösteren ekran görüntüleri aşağıda sunulmuştur:
+
+### Ana Sayfa
+![Ana Sayfa](./screenshots/ana-sayfa.png)
+
+### Kategori Seçimi
+![Kategori Seçimi](./screenshots/kategori-secimi.png)
+
+### Makale Görünümü
+![Makale Görünümü](./screenshots/makale-gorunumu.png)
+
+### Tavsiye Edilen Makaleler
+![Tavsiye Edilen Makaleler](./screenshots/tavsiye-makaleler.png)
+
 
 BTK Hackathon’u için sunduğumuz **Bilge-Kuoka** projesinde, kullanıcı odaklı ve yapay zeka destekli bir bilgi edinme deneyimi sunmaktan büyük mutluluk duyuyoruz. Amacımız, kullanıcıların ilgilendikleri konulara kolayca erişmelerini sağlayarak, verimli bir öğrenme ortamı oluşturmaktır!
