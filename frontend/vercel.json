@@ -2,13 +2,9 @@
   "version": 2,
   "builds": [
     {
-      "src": "src/index.html",
+      "src": "package.json",
       "use": "@vercel/static-build",
       "config": { "distDir": "build" }
-    },
-    {
-      "src": "api/**/*.js",
-      "use": "@vercel/node"
     }
   ],
   "routes": [
@@ -18,11 +14,17 @@
     },
     {
       "src": "/(.*)",
-      "dest": "/index.html"
+      "dest": "/index.html",
+      "status": 200
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/"
     }
   ],
   "env": {
-    "REACT_APP_API_URL": "https://your-backend-api-url.com",
-    "OTHER_ENV_VAR": "your-env-variable-value"
+    "REACT_APP_API_URL": "https://your-backend-api-url.com"
   }
 }
