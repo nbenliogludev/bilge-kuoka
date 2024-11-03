@@ -1,5 +1,11 @@
 # Bilge-Kuoka: Yapay Zeka Destekli Bilgi Platformu
 
+## Canlı Demo
+
+Platformumuzu denemek için aşağıdaki bağlantıya tıklayabilirsiniz:
+
+👉 **[Bilge-Kuoka Platformuna Git](http://45.147.46.138/start)**
+
 ## Proje Hakkında
 
 **Bilge-Kuoka**, BTK Hackathon için geliştirilmiş, Gemini API ile üretken yapay zeka kullanarak bilgi sunan interaktif bir platformdur. Bu platform, kullanıcılara ilgi alanlarına göre detaylandırılmış ve kişiselleştirilmiş bilgi edinme deneyimi sunar. Bilge-Kuoka ile kullanıcılar istedikleri konuda özelleştirilmiş içeriklere kolayca erişebilirler.
@@ -47,16 +53,13 @@ Bu video, platformun işleyişini ve kullanıcı deneyimini daha iyi anlamanız�
 Platformun çeşitli özelliklerini gösteren ekran görüntüleri aşağıda sunulmuştur:
 
 ### Ana Sayfa
-![Ana Sayfa](./screenshots/ana-sayfa.png)
+![Ana Sayfa](./images/main.png)
 
 ### Kategori Seçimi
-![Kategori Seçimi](./screenshots/kategori-secimi.png)
+![Kategori Seçimi](./images/kategori.png)
 
 ### Makale Görünümü
-![Makale Görünümü](./screenshots/makale-gorunumu.png)
-
-### Tavsiye Edilen Makaleler
-![Tavsiye Edilen Makaleler](./screenshots/tavsiye-makaleler.png)
+![Makale Görünümü](./images/article.png)
 
 
 BTK Hackathon’u için sunduğumuz **Bilge-Kuoka** projesinde, kullanıcı odaklı ve yapay zeka destekli bir bilgi edinme deneyimi sunmaktan büyük mutluluk duyuyoruz. Amacımız, kullanıcıların ilgilendikleri konulara kolayca erişmelerini sağlayarak, verimli bir öğrenme ortamı oluşturmaktır!
