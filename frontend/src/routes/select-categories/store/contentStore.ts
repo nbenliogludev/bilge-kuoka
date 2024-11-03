@@ -8,11 +8,19 @@ export type Content = {
     additionalInfo: string;
 };
 
+export type Document = {
+    id: string;
+    data: string;
+    content: Content;
+};
+
 type StockStore = {
     content: Content;
+    savedDocuments: Document[];
     actions: {
         clearContent: () => void;
         updateContent: (updatedFields: Partial<Content>) => void;
+        saveNewDocument: (document: Document) => void;
     };
 };
 
@@ -24,6 +32,7 @@ const useContentStore = create<StockStore>((set) => ({
         detail: '',
         additionalInfo: ''
     },
+    savedDocuments: [],
 
     actions: {
         clearContent: () => set((state) => ({
@@ -42,12 +51,17 @@ const useContentStore = create<StockStore>((set) => ({
                 ...state.content,
                 ...updatedFields
             }
+        })),
+
+        saveNewDocument: (document) => set((state) => ({
+            savedDocuments: [...state.savedDocuments, document]
         }))
     },
 }));
 
 export const useContentStoreActions = () => useContentStore((state) => state.actions);
 export const useContent = () => useContentStore((state) => state.content)
+export const useSavedDocuments = () => useContentStore((state) => state.savedDocuments)
 export const useAgeRange = () => useContentStore((state) => state.content.age);
 export const useMainCategory = () => useContentStore((state) => state.content.mainCategory);
 export const useSubCategory = () => useContentStore((state) => state.content.innerCategory);
