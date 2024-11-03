@@ -84,7 +84,7 @@ export default function SelectCategories() {
   };
 
   return (
-    <div className="flex flex-col items-center min-h-screen bg-gray-100 dark:bg-black">
+    <div className="flex flex-col items-center min-h-screen bg-background">
       <div className="flex flex-col items-center text-center m-8">
         <h1 className="font-bold text-3xl">Bilge Kuoka</h1>
         <div className="absolute top-24">
