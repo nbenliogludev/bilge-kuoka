@@ -20,7 +20,7 @@ const SubCategory = () => {
   const { data, isLoading } = useQuery({
     queryKey: ["query", searchValue],
     queryFn: () => fetchCategories(searchValue, storedCategory),
-    enabled: !!searchValue,
+    // enabled: !!searchValue,
     retry: 5,
     retryDelay: attemptIndex => Math.min(1000 * 2 ** attemptIndex, 30000),
   });
