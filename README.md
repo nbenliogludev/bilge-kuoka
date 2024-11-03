@@ -44,7 +44,7 @@ Bilge-Kuoka, bilgiye hızlı ve etkili bir şekilde ulaşmak isteyen tüm kullan
 ## Sunum Videosu
 
 Projemizi tanıtan kısa bir video sunumuna buradan ulaşabilirsiniz:
-[![Bilge-Kuoka Sunum Videosu](https://youtu.be/4bnoX92fk9Q)
+[Bilge-Kuoka Sunum Videosu](https://youtu.be/4bnoX92fk9Q)
 
 Bu video, platformun işleyişini ve kullanıcı deneyimini daha iyi anlamanızı sağlayacaktır.
 
