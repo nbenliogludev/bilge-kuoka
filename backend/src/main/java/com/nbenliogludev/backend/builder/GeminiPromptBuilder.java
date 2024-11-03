@@ -86,6 +86,15 @@ public class GeminiPromptBuilder {
         return buildJsonRequest(fullPrompt);
     }
 
+    public String buildArticleDetailPrompt(String article, String sentence, String age, String detail, String additionalInfo) {
+        String fullPrompt = String.format(
+                "Given the following article:\n\n\"%s\"\n\nProvide detailed information about the phrase \"%s\" based on the context of the article, suitable for an audience aged %s. Level of detail: %s. Additional information: %s. The response should be in the same language as the article title provided.",
+                article, sentence, age, detail.isEmpty() ? "standard" : detail, additionalInfo.isEmpty() ? "none" : additionalInfo
+        );
+        return buildJsonRequest(fullPrompt);
+    }
+
+
 
 
 }
