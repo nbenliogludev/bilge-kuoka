@@ -47,4 +47,15 @@ public class GeminiController {
                 request.getAdditionalInfo()
         );
     }
+
+    @PostMapping("/article-detail")
+    public ArticleDetailResponse getArticleDetail(@RequestBody ArticleDetailRequest request) {
+        return geminiService.getArticleDetail(
+                request.getArticle(),
+                request.getSentence(),
+                request.getAge(),
+                request.getDetail(),
+                request.getAdditionalInfo()
+        );
+    }
 }

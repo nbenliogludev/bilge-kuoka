@@ -10,7 +10,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 interface ArticleHintsProps {
     text: string;
-    documentId: string;
+    documentId?: string;
     numberOfHints: number;
 }
 

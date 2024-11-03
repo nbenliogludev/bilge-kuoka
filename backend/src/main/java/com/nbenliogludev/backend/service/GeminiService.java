@@ -2,6 +2,7 @@ package com.nbenliogludev.backend.service;
 
 import com.nbenliogludev.backend.builder.GeminiPromptBuilder;
 import com.nbenliogludev.backend.client.GeminiClient;
+import com.nbenliogludev.backend.dto.ArticleDetailResponse;
 import com.nbenliogludev.backend.dto.CategoriesResponse;
 import com.nbenliogludev.backend.dto.ContentResponse;
 import com.nbenliogludev.backend.parser.GeminiResponseParser;
@@ -102,5 +103,19 @@ public class GeminiService {
             throw new RuntimeException("Failed to parse response from Gemini API", e);
         }
     }
+
+    public ArticleDetailResponse getArticleDetail(String article, String sentence, String age, String detail, String additionalInfo) {
+        String requestBody = geminiPromptBuilder.buildArticleDetailPrompt(article, sentence, age, detail, additionalInfo);
+        String response = geminiApiClient.sendPostRequest(geminiModel, apiKey, requestBody);
+
+        try {
+            String detailedInfo = geminiResponseParser.parseResponse(response);
+            return new ArticleDetailResponse(detailedInfo, article, sentence); // Pass all required fields
+        } catch (ParseException e) {
+            logger.error("Failed to parse response from Gemini API: {}", response, e);
+            throw new RuntimeException("Failed to parse response from Gemini API", e);
+        }
+    }
+
 
 }
