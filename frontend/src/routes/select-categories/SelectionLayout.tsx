@@ -10,7 +10,7 @@ import SubCategory from "./steps/SubCategory";
 import AdditionalInfo from "./steps/AdditionalInfo";
 import LevelOfDetail from "./steps/LevelOfDetail";
 import Logo from "@/components/Logo";
-import { useContent } from "./store/contentStore";
+import { useContent, useContentStoreActions } from "./store/contentStore";
 import { usePostCategoryData } from "./hooks/queryHooks";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
@@ -22,6 +22,11 @@ interface Step {
   storeObjectKey: string;
   component: React.FC;
 }
+
+interface responseData {
+  data: string[];
+}
+
 const steps: Step[] = [
   { number: 1, label: "Yaş Aralığı", storeObjectKey: "age", component: AgeRange },
   { number: 2, label: "Kategori", storeObjectKey: "mainCategory", component: Category },
@@ -35,6 +40,7 @@ export default function SelectCategories() {
   const navigate = useNavigate();
   const mutation = usePostCategoryData();
   const contentObject = useContent();
+  const { saveNewDocument } = useContentStoreActions();
 
   const [currentStep, setCurrentStep] = React.useState(1);
 
@@ -65,10 +71,11 @@ export default function SelectCategories() {
 
   const handleSubmit = () => {
     mutation.mutate(contentObject, {
-      onSuccess: (data: string) => {
+      onSuccess: (data: responseData) => {
         console.log("Data submitted successfully:", data);
         const transactionId = uuidv4();
-        navigate(`/${transactionId}`, { state: data });
+        navigate(`/${transactionId}`);
+        saveNewDocument({ id: transactionId, data: data.data[0], content: contentObject });
       },
       onError: (error: unknown) => {
         console.error("Error submitting data:", error);

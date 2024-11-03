@@ -16,19 +16,11 @@ import {
 } from "@/components/ui/sidebar";
 import { Link, useNavigate } from "react-router-dom";
 import { ModeToggle } from "./mode-toggle";
+import { Document, useSavedDocuments } from "@/routes/select-categories/store/contentStore";
+import MarkdownRenderer from "@/utils/MarkDownRenderer";
 
 // Menu items.
 const items = [
-  {
-    title: "Home",
-    url: "/",
-    icon: Home,
-  },
-  {
-    title: "Stats",
-    url: "stats",
-    icon: Inbox,
-  },
   {
     title: "Settings",
     url: "#",
@@ -47,7 +39,29 @@ export function AppSidebar() {
         // toggleSidebar,
       } = useSidebar()
       
-      const navigate = useNavigate();
+    const navigate = useNavigate();
+
+    const savedDocuments = useSavedDocuments();
+
+    console.log(savedDocuments, 'savedDocuments')
+
+    const renderSavedDocument = ( {item}: {item: Document} ) => {
+      const [header] = item.data.split('\n');
+      return (
+        <div>
+          <SidebarMenuItem key={item.id}>
+              <SidebarMenuButton asChild>
+                <Link to={item.id} >
+                  {" "}
+                  <span>
+                    <MarkdownRenderer markdownText={header} />
+                  </span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+        </div>
+      );
+    }
     
     const handleStartNewTab = () => {
         navigate('/start')
@@ -64,6 +78,7 @@ export function AppSidebar() {
           </SidebarGroupAction>
           <SidebarGroupContent>
             <SidebarMenu>
+              {savedDocuments.map((item) => renderSavedDocument({item}))}
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>

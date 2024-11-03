@@ -6,7 +6,7 @@ const MarkdownRenderer = ({ markdownText }: {markdownText: string}) => {
 
   return (
     <div
-      className="prose max-w-none p-6"
+      className="prose max-w-none"
       dangerouslySetInnerHTML={{ __html: htmlContent }}
     />
   );

@@ -12,8 +12,8 @@ const ageRanges = [
     label: "12-15",
   },
   {
-    value: "12-18",
-    label: "12-18",
+    value: "15-18",
+    label: "15-18",
   },
   {
     value: "18-25",
